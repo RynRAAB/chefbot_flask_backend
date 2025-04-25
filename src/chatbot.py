@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
-from main import app, client, db
-from models import Conversation
+from src.main import app, client, db
+from src.models import Conversation
 import json
-from models import User, Conversation, AccountPersonnalisation  # Ajout de AccountPersonnalisation
+from src.models import User, Conversation, AccountPersonnalisation  # Ajout de AccountPersonnalisation
 
 
 # Fonction pour déterminer si une question concerne la cuisine
