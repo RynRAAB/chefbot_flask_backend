@@ -38,8 +38,8 @@ client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 # La clé API est récupérée depuis les variables d'environnement pour sécuriser l'accès.
 
 # Importation des routes et du chatbot (après que les extensions soient initialisées)
-from routes import *  # Importation des routes définies dans le fichier routes.py
-from chatbot import *  # Importation des fonctionnalités du chatbot définies dans chatbot.py
+from src.routes import *  # Importation des routes définies dans le fichier routes.py
+from src.chatbot import *  # Importation des fonctionnalités du chatbot définies dans chatbot.py
 
 # Lancement de l'application Flask
 if __name__ == "__main__":
