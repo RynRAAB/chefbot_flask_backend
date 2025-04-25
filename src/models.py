@@ -1,9 +1,9 @@
 # Importation des modules nécessaires
-from main import db
+from src.main import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timezone
 from itsdangerous import URLSafeTimedSerializer as Serializer
-from main import app
+from src.main import app
 from sqlalchemy import Enum
 
 # Modèle représentant un utilisateur
