@@ -1,11 +1,11 @@
 # Importation des modules nécessaires
 from flask import request, jsonify, url_for, session, redirect
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from main import app, db, mail
+from src.main import app, db, mail
 from werkzeug.security import generate_password_hash
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer
-from models import User, Conversation, ResetToken, AccountPersonnalisation, Favorite
+from src.models import User, Conversation, ResetToken, AccountPersonnalisation, Favorite
 import json
 import time
 import sqlalchemy
