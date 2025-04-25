@@ -9,7 +9,7 @@ import openai
 import os
 
 # Importation de la configuration
-from config import Config
+from src.config import Config
 
 # Initialisation des extensions Flask (sans lier à l'app tout de suite)
 db = SQLAlchemy(session_options={"autocommit": False, "autoflush": False})  
