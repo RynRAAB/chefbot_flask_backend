@@ -39,7 +39,7 @@ class Config:
 
     # Configuration de la base de données
     # Utilisation de SQLite avec un fichier de base de données situé dans le dossier "instance"
-    SQLALCHEMY_DATABASE_URI = f"postgresql://chefbot_db_user:354Eb9haTCrehZVu3DyXpOq986625xve@dpg-d06m5tc9c44c73fm1sng-a/chefbot_db"
+    SQLALCHEMY_DATABASE_URI = f"postgresql://chefbot_db_user:354Eb9haTCrehZVu3DyXpOq986625xve@dpg-d06m5tc9c44c73fm1sng-a.oregon-postgres.render.com/chefbot_db"
     # Désactiver le suivi des modifications pour économiser des ressources
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
