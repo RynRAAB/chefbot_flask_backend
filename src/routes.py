@@ -98,7 +98,7 @@ def confirm_email(token):
     # Marque l'utilisateur comme vérifié
     user.is_verified = True
     db.session.commit()
-    return redirect("http://localhost:5173/login")
+    return redirect("https://chefbot-front.onrender.com/login")
 
 # Route pour réinitialiser le mot de passe
 @app.route("/reset_password", methods=['GET','POST'])
@@ -114,7 +114,7 @@ def reset_password():
         db.session.add(my_token)
         db.session.commit()
         subject = "No-reply : Réinitialisation du mot de passe"
-        confirm_url = f"http://localhost:5173/inputNewPassword?token={token}"
+        confirm_url = f"https://chefbot-front.onrender.com/inputNewPassword?token={token}"
         body = f"Bonjour {user.last_name.upper()},\n\nCliquez sur le lien suivant pour réinitialiser votre mot de passe :\n\n{confirm_url}\n\nMerci d'ignorer cet émail si vous n'êtes pas à l'origine de cette opération (Demande de réinitialisation du mot de passe). Ce lien est valable pour une seule modification de mot de passe et expire dans 10 minutes."
         msg = Message(subject=subject, sender=app.config["MAIL_USERNAME"], recipients=[username])
         msg.subject = subject
