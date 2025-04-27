@@ -195,9 +195,9 @@ def chat(conversation_id):
          
         #history.insert(0, {"role": "system", "content": "Tu es un expert en cuisine. Tu ne réponds qu'aux questions sur la cuisine."})
 
-        username = conversation.user_id
+        userid = conversation.user_id
         #print(username)
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(id=userid).first()
         #print(user)
         user_username = user.username
         system_prompt = get_user_personalization(user_username)
