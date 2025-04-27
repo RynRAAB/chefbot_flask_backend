@@ -180,8 +180,9 @@ def get_conversations():
     Retourne :
     - JSON : Liste des conversations avec leurs ID, titres et dates de création.
     """
-    user_id = get_jwt_identity()  # Récupération de l'identité de l'utilisateur
-    conversations = Conversation.query.filter_by(user_id=user_id).order_by(desc(Conversation.created_at)).all()
+    email = get_jwt_identity()  # Récupération de l'identité de l'utilisateur
+    user = User.query.filter_by(username=email).first()
+    conversations = Conversation.query.filter_by(user_id=user.id).order_by(desc(Conversation.created_at)).all()
     return jsonify([{"id": conv.id, "title": conv.title, "created_at": conv.created_at} for conv in conversations]), 200
 
 # Route pour récupérer une conversation spécifique
@@ -203,8 +204,9 @@ def get_conversation(conversation_id):
     Retourne :
     - JSON : Détails de la conversation ou un message d'erreur si elle n'existe pas.
     """
-    user_id = get_jwt_identity()  # Récupération de l'identité de l'utilisateur
-    conversation = Conversation.query.filter_by(id=conversation_id, user_id=user_id).first()
+    email = get_jwt_identity()  # Récupération de l'identité de l'utilisateur
+    user = User.query.filter_by(username=email).first()
+    conversation = Conversation.query.filter_by(id=conversation_id, user_id=user.id).first()
     if not conversation:
         return jsonify({"message": "Conversation non trouvée"}), 404
     return jsonify({"id": conversation.id, "title": conversation.title, "messages": conversation.messages}), 200
@@ -230,12 +232,13 @@ def create_conversation():
     Retourne :
     - JSON : Détails de la conversation créée ou un message d'erreur en cas d'échec.
     """
-    user_id = get_jwt_identity()  # Récupération de l'identité de l'utilisateur
+    email = get_jwt_identity()  # Récupération de l'identité de l'utilisateur
+    user = User.query.filter_by(username=email).first()
     data = request.json  # Récupération des données de la requête
     title = data.get("title", "Nouvelle Conversation")  # Titre par défaut si non fourni
 
     # Création d'une nouvelle conversation
-    conversation = Conversation(user_id=user_id, title=title, messages="[]")
+    conversation = Conversation(user_id=user.id, title=title, messages="[]")
     db.session.add(conversation)
 
     # Gestion des erreurs pour réessayer les transactions en cas de verrouillage de la base de données
@@ -255,11 +258,12 @@ def create_conversation():
 @app.route("/conversations/<int:conversation_id>/messages", methods=["POST"])
 @jwt_required()
 def add_message(conversation_id):
-    user_id = get_jwt_identity()
+    email = get_jwt_identity()
+    user = User.query.filter_by(username=email).first()
     data = request.json
     message = data.get("message")
     bot_response = data.get("bot_response")
-    conversation = Conversation.query.filter_by(id=conversation_id, user_id=user_id).first()
+    conversation = Conversation.query.filter_by(id=conversation_id, user_id=user.id).first()
     if not conversation:
         return jsonify({"message": "Conversation non trouvée"}), 404
     messages = json.loads(conversation.messages)
