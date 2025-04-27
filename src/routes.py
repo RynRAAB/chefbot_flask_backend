@@ -454,8 +454,9 @@ def delete_favorite():
 @app.route("/conversations/<int:conversation_id>", methods=["DELETE"])
 @jwt_required()
 def delete_conversation(conversation_id):
-    user_id = get_jwt_identity()
-    conversation = Conversation.query.filter_by(id=conversation_id, user_id=user_id).first()
+    email = get_jwt_identity()
+    user = User.query.filter_by(username=email).first()
+    conversation = Conversation.query.filter_by(id=conversation_id, user_id=user.id).first()
     
     if not conversation:
         return jsonify({"message": "Conversation introuvable"}), 404
